@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BM-Avenir</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles and animations that are complex to replicate with Tailwind alone */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        @keyframes float-orb {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+        }
+        .animate-float-orb-1 { animation: float-orb 25s ease-in-out infinite; }
+        .animate-float-orb-2 { animation: float-orb 30s ease-in-out infinite -5s; }
+
+        @keyframes float-building {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .animate-float-building { animation: float-building 20s ease-in-out infinite; }
+
+        .iso-box { transform: rotateX(-30deg) rotateY(45deg); transform-style: preserve-3d; }
+        .iso-face-front { transform: translateZ(40px); }
+        .iso-face-right { transform: rotateY(90deg) translateZ(40px); }
+        .iso-face-top { transform: rotateX(90deg) translateZ(60px); }
+        .iso-front-windows::after, .iso-right-windows::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image:
+                    repeating-linear-gradient(0deg, transparent, transparent 15px, rgba(255, 255, 255, 0.1) 15px, rgba(255, 255, 255, 0.1) 20px),
+                    repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(255, 255, 255, 0.1) 15px, rgba(255, 255, 255, 0.1) 20px);
+        }
+
+        @keyframes draw-plan {
+            0% { stroke-dashoffset: 500; }
+            50% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: -500; }
+        }
+        .animate-draw-plan { animation: draw-plan 20s linear infinite; }
+
+        @keyframes fade-up {
+            from { opacity: 0; transform: translate(-50%, -45%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+        .animate-fade-up { animation: fade-up 1s ease-out; }
+
+        @keyframes logo-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-logo-float { animation: logo-float 6s ease-in-out infinite; }
+
+        @keyframes fade-in { to { opacity: 1; } }
+        .animate-fade-in { animation: fade-in 1s ease-out 0.5s forwards; }
+
+    </style>
+</head>
+<body class="h-screen overflow-hidden bg-[#fafafa] relative">
+<!-- Background Elements -->
+<div class="fixed inset-0 bg-gradient-to-br from-white via-[#f8f9fa] to-white z-0">
+    <div class="absolute w-[600px] h-[600px] bg-gradient-to-r from-slate-500 to-slate-700 rounded-full filter blur-3xl opacity-20 -top-[200px] -left-[200px] animate-float-orb-1"></div>
+    <div class="absolute w-[500px] h-[500px] bg-gradient-to-r from-gray-400 to-gray-600 rounded-full filter blur-3xl opacity-20 -bottom-[250px] -right-[250px] animate-float-orb-2"></div>
+</div>
+
+<!-- Decorative Floating Elements -->
+<div class="absolute inset-0 opacity-[0.06] pointer-events-none">
+    <!-- Isometric Buildings -->
+    <div class="absolute top-[15%] left-[10%] animate-float-building" style="animation-delay: 0s;">
+        <div class="iso-box w-[80px] h-[120px] relative"><div class="absolute bg-gradient-to-br from-slate-400 to-slate-500 border border-white/30 iso-face-front w-[80px] h-[120px] iso-front-windows"></div><div class="absolute bg-gradient-to-br from-slate-600 to-slate-700 border border-white/30 iso-face-right w-[80px] h-[120px] iso-right-windows"></div><div class="absolute bg-gradient-to-br from-slate-300 to-slate-400 border border-white/30 iso-face-top w-[80px] h-[80px]"></div></div>
+    </div>
+    <div class="absolute top-[60%] left-[15%] animate-float-building" style="animation-delay: 3s;">
+        <div class="iso-box w-[80px] h-[100px] relative"><div class="absolute bg-gradient-to-br from-slate-400 to-slate-500 border border-white/30 iso-face-front w-[80px] h-[100px] iso-front-windows"></div><div class="absolute bg-gradient-to-br from-slate-600 to-slate-700 border border-white/30 iso-face-right w-[80px] h-[100px] iso-right-windows"></div><div class="absolute bg-gradient-to-br from-slate-300 to-slate-400 border border-white/30 iso-face-top w-[80px] h-[80px]"></div></div>
+    </div>
+    <!-- Floor Plan Sketch -->
+    <div class="absolute w-[200px] h-[200px] top-1/2 left-[20%] -translate-x-1/2 -translate-y-1/2 opacity-[0.05] hidden md:block">
+        <svg viewBox="0 0 200 200" class="stroke-slate-600 animate-draw-plan" style="stroke-width: 1; fill: none; stroke-dasharray: 500; stroke-dashoffset: 500;"><rect x="20" y="20" width="160" height="160" /><line x1="20" y1="80" x2="100" y2="80" /><line x1="100" y1="20" x2="100" y2="120" /><line x1="100" y1="120" x2="180" y2="120" /></svg>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="absolute top-1/2 left-1/2 z-10 text-center animate-fade-up" style="transform: translate(-50%, -50%);">
+    <div class="mb-4 inline-block">
+        <div class="w-28 h-28 lg:w-32 lg:h-32 mx-auto animate-logo-float filter drop-shadow-xl">
+            <!-- VOTRE LOGO SVG INTEGRE -->
+            <svg viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- The color gradient has been removed for a black and white version -->
+                <path d="M0 30 L60 0 L120 30" fill="none" stroke="black" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+                <text x="60" y="65" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="32" font-weight="600" text-anchor="middle" fill="black">BM</text>
+                <text x="60" y="90" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="500" text-anchor="middle" fill="#475569" letter-spacing="1">AVENIR</text>
+            </svg>
+        </div>
+    </div>
+
+    <p class="text-lg md:text-xl font-light text-slate-500 tracking-widest uppercase opacity-0 animate-fade-in">Société Civile Immobilière</p>
+</div>
+
+<!-- Cursor -->
+<div class="cursor-glow fixed w-5 h-5 rounded-full bg-slate-500/20 pointer-events-none -translate-x-1/2 -translate-y-1/2 z-[9999] transition-transform duration-300 hidden md:block" id="cursor"></div>
+
+<script>
+    // Smooth cursor follow
+    const cursor = document.getElementById('cursor');
+    if (cursor) {
+        let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
+        document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.1;
+            cursorY += (mouseY - cursorY) * 0.1;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+        if ('ontouchstart' in window) { cursor.style.display = 'none'; }
+    }
+</script>
+</body>
+</html>
+
